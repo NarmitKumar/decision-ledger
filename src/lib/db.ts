@@ -66,7 +66,7 @@ let db: Database.Database | null = null;
 
 export function getDb() {
   if (db) return db;
-  const dir = path.join(process.cwd(), "data");
+  const dir = (process.env.VERCEL ? "/tmp" : path.join(process.cwd(), "data"));
   fs.mkdirSync(dir, { recursive: true });
   db = new Database(path.join(dir, "ledger.db"));
   db.pragma("journal_mode = WAL");
